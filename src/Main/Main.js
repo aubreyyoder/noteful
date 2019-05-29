@@ -1,4 +1,5 @@
 import React from "react";
+import { Route } from "react-router-dom";
 import Note from "../Note/Note";
 
 class Main extends React.Component {
@@ -11,10 +12,15 @@ class Main extends React.Component {
       <div className="main">
         <ul id="main-list">
           {notes.map(note => (
-            <Note key={note.id} {...note} />
+            <Route
+              path="/note"
+              render={() => <Note key={note.id} {...note} />}
+            />
           ))}
         </ul>
-        <button name="add-note">Add Note</button>
+        <button name="add-note" className="add-note-button">
+          Add Note
+        </button>
       </div>
     );
   }

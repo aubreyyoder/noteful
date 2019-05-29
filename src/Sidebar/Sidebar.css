@@ -1,0 +1,15 @@
+.sidebar {
+  border: 2px solid black;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  text-align: center;
+  top: 150px;
+  width: 178px;
+}
+
+.add-button {
+  font-size: 15px;
+  height: 60px;
+  width: 100px;
+}

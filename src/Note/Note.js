@@ -1,4 +1,5 @@
 import React from "react";
+import "./Note.css";
 
 class Note extends React.Component {
   render() {
@@ -8,7 +9,9 @@ class Note extends React.Component {
           <a href="/Note">{this.props.title}</a>
         </h1>
         <p>Date Modified:{this.props.dateModified}</p>
-        <button name="delete">Delete Note</button>
+        <button name="delete" className="delete-button">
+          Delete Note
+        </button>
       </div>
     );
   }

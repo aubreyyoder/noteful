@@ -1,0 +1,14 @@
+.note {
+  border: 1px solid black;
+  height: 100px;
+  margin: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  width: 80%;
+}
+
+.delete-button {
+  left: 70%;
+  position: relative;
+  bottom: 50px;
+}

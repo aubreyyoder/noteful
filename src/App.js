@@ -67,7 +67,7 @@ class App extends React.Component {
           <Header />
         </header>
         <main className="main">
-          <Main notes={notes} />
+          <Route exact path="/" render={() => <Main notes={notes} />} />
         </main>
         <section className="sidebar">
           <Sidebar folders={folders} />

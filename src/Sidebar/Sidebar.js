@@ -15,7 +15,7 @@ class Sidebar extends React.Component {
             <Folder key={folder.id} {...folder} />
           ))}
         </ul>
-        <button for="add-folder" name="add-folder">
+        <button for="add-folder" name="add-folder" className="add-button">
           Add Folder
         </button>
       </div>
