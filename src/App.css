@@ -37,8 +37,10 @@ main {
 }
 
 .add-note-button {
+  border: 1px solid black;
   height: 30px;
   left: 20%;
+  padding: 10px;
   position: relative;
   font-size: 15px;
   top: 30px;
