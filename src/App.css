@@ -27,7 +27,7 @@ ul {
   list-style-type: none;
 }
 
-.note-list {
+.note-section {
   border: 2px solid black;
   position: absolute;
   left: 180px;

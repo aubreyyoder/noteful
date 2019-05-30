@@ -7,12 +7,14 @@ class Folder extends React.Component {
   };
   render() {
     const { folders } = this.props;
-    const folder = folders.find(f => f.id === folders.match.params.folderId);
+    const folder = folders.find(
+      folder => folder.id === folders.match.params.folderId
+    );
     return (
       <div className="folder">
         <h3>{folder.title}</h3>
-        {folder.content.map((f, i) =>
-          f === "" ? <br key={i} /> : <p key={i}>{f}</p>
+        {folder.content.map((n, i) =>
+          n === "" ? <br key={i} /> : <p key={i}>{n}</p>
         )}
       </div>
     );

@@ -1,6 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import Note from "../Note/Note";
+import NoteList from "../NoteList/NoteList";
 import Sidebar from "../Sidebar/Sidebar";
 
 class Main extends React.Component {
@@ -16,15 +15,8 @@ class Main extends React.Component {
         <section className="sidebar">
           <Sidebar folders={folders} />
         </section>
-        <section className="note-list">
-          <ul id="note-list">
-            {notes.map(note => (
-              <Note key={note.id} {...note} />
-            ))}
-          </ul>
-          <Link to="/note" name="add-note" className="add-note-button">
-            Add Note
-          </Link>
+        <section className="note-section">
+          <NoteList notes={notes} />
         </section>
       </div>
     );
