@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./Folder.css";
 
 class Folder extends React.Component {
@@ -7,7 +7,7 @@ class Folder extends React.Component {
     return (
       <div className="folder">
         <h3>
-          <Link to="/folder">{this.props.title}</Link>
+          <NavLink to="/folder">{this.props.title}</NavLink>
         </h3>
       </div>
     );
