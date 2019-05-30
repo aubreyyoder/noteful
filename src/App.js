@@ -1,8 +1,9 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Header from "./Header";
-import Sidebar from "./Sidebar/Sidebar";
 import Main from "./Main/Main";
+import Folder from "./Folder/Folder";
+import Note from "./Note/Note";
 import "./App.css";
 
 const notes = [
@@ -53,13 +54,6 @@ class App extends React.Component {
     notes
   };
 
-  viewFolders = folders => {
-    this.setState({
-      folders,
-      page: "folders-list"
-    });
-  };
-
   render() {
     return (
       <div className="App">
@@ -67,11 +61,19 @@ class App extends React.Component {
           <Header />
         </header>
         <main className="main">
-          <Route exact path="/" render={() => <Main notes={notes} />} />
+          <Route
+            exact
+            path="/"
+            render={() => <Main folders={folders} notes={notes} />}
+          />
         </main>
-        <section className="sidebar">
-          <Route path="/" render={() => <Sidebar folders={folders} />} />
-        </section>
+        <Switch>
+          <Route
+            path="/folder/:folderId"
+            render={() => <Folder folders={folders} />}
+          />
+          <Route path="/note/note:id" render={() => <Note notes={notes} />} />
+        </Switch>
       </div>
     );
   }

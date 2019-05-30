@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import FolderList from "../FolderList/FolderList";
+import Folder from "../Folder/Folder";
 import "./Sidebar.css";
 
 class Sidebar extends React.Component {
@@ -13,10 +13,12 @@ class Sidebar extends React.Component {
       <div className="Sidebar">
         <ul id="folder-list">
           {folders.map(folder => (
-            <FolderList key={folder.id} {...folder} />
+            <li key={folder.id}>
+              <Link to={`/folder/${folder.id}`}>{folder.title}</Link>
+            </li>
           ))}
         </ul>
-        <Link for="add-folder" name="add-folder" className="add-button">
+        <Link to="/addfolder" className="add-button">
           Add Folder
         </Link>
       </div>
