@@ -1,17 +1,22 @@
-import React from "react";
+import React, { Component } from "react";
+import NotefulForm from "../NotefulForm/NotefulForm";
+import "./AddFolder.css";
 
-class AddFolder extends React.Component {
+export default class AddFolder extends Component {
   render() {
     return (
-      <div className="add-folder">
-        <form id="add-folder">
-          <input type="text" />
-          <input type="text" />
-          <input type="text" />
-        </form>
-      </div>
+      <section className="AddFolder">
+        <h2>Create a folder</h2>
+        <NotefulForm>
+          <div className="field">
+            <label htmlFor="folder-name-input">Name</label>
+            <input type="text" id="folder-name-input" />
+          </div>
+          <div className="buttons">
+            <button type="submit">Add folder</button>
+          </div>
+        </NotefulForm>
+      </section>
     );
   }
 }
-
-export default AddFolder;

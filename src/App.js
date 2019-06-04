@@ -1,79 +1,101 @@
-import React from "react";
-import { Route, Switch } from "react-router-dom";
-import Header from "./Header";
-import Main from "./Main/Main";
-import Folder from "./Folder/Folder";
-import Note from "./Note/Note";
+import React, { Component } from "react";
+import { Route, Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import NoteListNav from "./NoteListNav/NoteListNav";
+import NotePageNav from "./NotePageNav/NotePageNav";
+import NoteListMain from "./NoteListMain/NoteListMain";
+import NotePageMain from "./NotePageMain/NotePageMain";
+import AddFolder from "./AddFolder/AddFolder";
+import AddNote from "./AddNote/AddNote";
+import dummyStore from "./dummy-store";
+import { getNotesForFolders, findNote, findFolder } from "./notes-helper";
 import "./App.css";
 
-const notes = [
-  {
-    id: 0,
-    title: "Note 1",
-    dateModified: "01/02/2019",
-    content:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s..."
-  },
-  {
-    id: 1,
-    title: "Note 2",
-    dateModified: "05/02/2019",
-    content:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s..."
-  },
-  {
-    id: 2,
-    title: "Note 3",
-    dateModified: "12/02/2019",
-    content:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s..."
-  }
-];
-
-const folders = [
-  {
-    id: 0,
-    title: "Folder 1",
-    content: notes
-  },
-  {
-    id: 1,
-    title: "Folder 2",
-    content: notes
-  },
-  {
-    id: 2,
-    title: "Folder 3",
-    content: notes
-  }
-];
-
-class App extends React.Component {
+class App extends Component {
   state = {
-    folders,
-    notes
+    notes: [],
+    folders: []
   };
+
+  componentDidMount() {
+    // fake date loading from API call
+    setTimeout(() => this.setState(dummyStore), 600);
+  }
+
+  renderNavRoutes() {
+    const { notes, folders } = this.state;
+    return (
+      <>
+        {["/", "/folder/:folderId"].map(path => (
+          <Route
+            exact
+            key={path}
+            path={path}
+            render={routeProps => (
+              <NoteListNav folders={folders} notes={notes} {...routeProps} />
+            )}
+          />
+        ))}
+        <Route
+          path="/note/:noteId"
+          render={routeProps => {
+            const { noteId } = routeProps.match.params;
+            const note = findNote(notes, noteId) || {};
+            const folder = findFolder(folders, note.folderId);
+            return <NotePageNav {...routeProps} folder={folder} />;
+          }}
+        />
+        <Route path="/add-folder" component={NotePageNav} />
+        <Route path="/add-note" component={NotePageNav} />
+      </>
+    );
+  }
+
+  renderMainRoutes() {
+    const { notes, folders } = this.state;
+    return (
+      <>
+        {["/", "/folder/:folderId"].map(path => (
+          <Route
+            exact
+            key={path}
+            path={path}
+            render={routeProps => {
+              const { folderId } = routeProps.match.params;
+              const notesForFolder = getNotesForFolders(notes, folderId);
+              return <NoteListMain {...routeProps} notes={notesForFolder} />;
+            }}
+          />
+        ))}
+        <Route
+          path="/note/:noteId"
+          render={routeProps => {
+            const { noteId } = routeProps.match.params;
+            const note = findNote(notes, noteId);
+            return <NotePageMain {...routeProps} note={note} />;
+          }}
+        />
+        <Route path="/add-folder" component={AddFolder} />
+        <Route
+          path="/add-note"
+          render={routeProps => {
+            return <AddNote {...routeProps} folders={folders} />;
+          }}
+        />
+      </>
+    );
+  }
 
   render() {
     return (
       <div className="App">
-        <header className="header">
-          <Header />
+        <nav className="App__nav">{this.renderNavRoutes()}</nav>
+        <header className="App__header">
+          <h1>
+            <Link to="/">Noteful</Link> <FontAwesomeIcon icon="check-double" />
+          </h1>
         </header>
-        <main className="main">
-          <Route
-            exact
-            path="/"
-            render={() => <Main folders={folders} notes={notes} />}
-          />
-        </main>
-        <Switch>
-          <Route
-            path="/folder/:folderId"
-            render={() => <Folder folders={folders} />}
-          />
-          <Route path="/note/note:id" render={() => <Note notes={notes} />} />
-        </Switch>
+        <main className="App__main">{this.renderMainRoutes()}</main>
       </div>
     );
   }
