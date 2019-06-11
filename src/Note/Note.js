@@ -1,9 +1,9 @@
 import React from "react";
-import NotefulContext from "../NotefulContext";
 import { Link } from "react-router-dom";
-import config from "../config";
 import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import NotefulContext from "../NotefulContext";
+import config from "../config";
 import "./Note.css";
 
 export default class Note extends React.Component {
@@ -12,8 +12,8 @@ export default class Note extends React.Component {
   };
   static contextType = NotefulContext;
 
-  handleClickDelete = event => {
-    event.preventDefault();
+  handleClickDelete = e => {
+    e.preventDefault();
     const noteId = this.props.id;
 
     fetch(`${config.API_ENDPOINT}/notes/${noteId}`, {

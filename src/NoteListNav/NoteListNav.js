@@ -1,16 +1,16 @@
 import React from "react";
-import NotefulContext from "../NotefulContext";
 import { NavLink, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CircleButton from "../CircleButton/CircleButton";
+import NotefulContext from "../NotefulContext";
 import { countNotesForFolder } from "../notes-helper";
 import "./NoteListNav.css";
 
-class NoteListNav extends React.Component {
+export default class NoteListNav extends React.Component {
   static contextType = NotefulContext;
 
   render() {
-    const { folders, notes } = this.context;
+    const { folders = [], notes = [] } = this.context;
     return (
       <div className="NoteListNav">
         <ul className="NoteListNav__list">
@@ -37,12 +37,10 @@ class NoteListNav extends React.Component {
           >
             <FontAwesomeIcon icon="plus" />
             <br />
-            Folder
+            Add Folder
           </CircleButton>
         </div>
       </div>
     );
   }
 }
-
-export default NoteListNav;

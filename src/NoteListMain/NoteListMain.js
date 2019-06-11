@@ -37,7 +37,7 @@ class NoteListMain extends React.Component {
           >
             <FontAwesomeIcon icon="plus" />
             <br />
-            Note
+            Add Note
           </CircleButton>
         </div>
       </section>
