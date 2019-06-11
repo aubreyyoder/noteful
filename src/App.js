@@ -44,6 +44,13 @@ class App extends Component {
     });
   };
 
+  addFolder = folder => {
+    const newFolders = [...this.state.folders, folder];
+    this.setState({
+      folders: newFolders
+    });
+  };
+
   renderNavRoutes() {
     return (
       <>
