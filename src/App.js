@@ -12,10 +12,28 @@ import "./App.css";
 import NotefulContext from "./NotefulContext";
 
 class App extends Component {
-  state = {
-    notes: [],
-    folders: []
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      notes: [],
+      folders: [],
+      noteName: "",
+      folderName: "",
+      content: "",
+      folderSelected: [],
+      noteNameValid: false,
+      folderNameValid: false,
+      contentValid: false,
+      folderSelectValid: false,
+      formValid: false,
+      validationMessages: {
+        noteName: "",
+        folderName: "",
+        content: "",
+        folderSelected: []
+      }
+    };
+  }
 
   componentDidMount() {
     Promise.all([
@@ -36,6 +54,14 @@ class App extends Component {
         console.error({ error });
       });
   }
+  deleteFolder = folderId => {
+    const newFolders = this.state.folders.filter(
+      folder => folder.id !== folderId
+    );
+    this.setState({
+      folders: newFolders
+    });
+  };
 
   deleteNote = noteId => {
     const newNotes = this.state.notes.filter(note => note.id !== noteId);
@@ -88,9 +114,25 @@ class App extends Component {
     const contextValue = {
       notes: this.state.notes,
       folders: this.state.folders,
+      deleteFolder: this.deleteFolder,
       deleteNote: this.deleteNote,
       addFolder: this.addFolder,
-      addNote: this.addNote
+      addNote: this.addNote,
+      noteName: this.state.noteName,
+      folderName: this.state.folderName,
+      content: this.state.content,
+      folderSelected: this.state.folderSelected,
+      noteNameValid: this.state.noteNameValid,
+      folderNameValid: this.state.folderNameValid,
+      contentValid: this.state.contentValid,
+      folderSelectValid: this.state.folderSelectValid,
+      formValid: this.state.formValid,
+      validationMessages: {
+        noteName: this.state.validationMessages.noteName,
+        folderName: this.state.validationMessages.folderName,
+        content: this.state.validationMessages.content,
+        folderSelected: this.state.validationMessages.folderSelected
+      }
     };
     return (
       <NotefulContext.Provider value={contextValue}>

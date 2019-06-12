@@ -3,6 +3,7 @@ import NotefulForm from "../NotefulForm/NotefulForm";
 import "./AddNote.css";
 import NotefulContext from "../NotefulContext";
 import config from "../config";
+import ValidationError from "../ErrorBoundaries/ValidationError";
 
 export default class AddNote extends Component {
   static defaultProps = {
@@ -50,6 +51,10 @@ export default class AddNote extends Component {
           <div className="field">
             <label htmlFor="note-name-input">Name</label>
             <input type="text" id="note-name-input" name="note-name" />
+            <ValidationError
+              hasError={!this.state.noteNameValid}
+              message={this.state.validationMessages.noteName}
+            />
           </div>
           <div className="field">
             <label htmlFor="note-content-input">Content</label>

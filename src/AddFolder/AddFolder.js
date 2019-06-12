@@ -3,6 +3,7 @@ import NotefulForm from "../NotefulForm/NotefulForm";
 import NotefulContext from "../NotefulContext";
 import config from "../config";
 import "./AddFolder.css";
+import ValidationError from "../ErrorBoundaries/ValidationError";
 
 class AddFolder extends Component {
   static defaultProps = {
@@ -38,6 +39,44 @@ class AddFolder extends Component {
       });
   };
 
+  validateFolderName(fieldValue) {
+    const fieldErrors = { ...this.state.validationMessages };
+    let hasError = false;
+
+    fieldValue = fieldValue.trim();
+    if (fieldValue.length === 0) {
+      fieldErrors.folderName = "Folder Name is required";
+      hasError = true;
+    } else {
+      if (fieldValue.length > 20) {
+        fieldErrors.folderName = "Name cannot be longer than 20 characters";
+        hasError = true;
+      } else {
+        fieldErrors.folderName = "";
+        hasError = false;
+      }
+    }
+    this.setState(
+      {
+        validationMessages: fieldErrors,
+        folderNameValid: !hasError
+      },
+      this.formValid
+    );
+  }
+
+  formValid() {
+    this.setState({
+      formValid: this.state.folderNameValid
+    });
+  }
+
+  updateFolderName(folderName) {
+    this.setState({ folderName }, () => {
+      this.validateFolderName(folderName);
+    });
+  }
+
   render() {
     return (
       <section className="AddFolder">
@@ -46,6 +85,10 @@ class AddFolder extends Component {
           <div className="field">
             <label htmlFor="folder-name-input">Name</label>
             <input type="text" id="folder-name-input" name="folder-name" />
+            <ValidationError
+              hasError={!this.context.folderNameValid}
+              message={this.context.validationMessages.folderName}
+            />
           </div>
           <div className="buttons">
             <button type="submit">Add folder</button>

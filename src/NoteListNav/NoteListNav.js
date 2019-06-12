@@ -4,9 +4,36 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NotefulContext from "../NotefulContext";
 import { countNotesForFolder } from "../notes-helper";
 import "./NoteListNav.css";
+import config from "../config";
 
 export default class NoteListNav extends React.Component {
+  static defaultProps = {
+    onDeleteFolder: () => {}
+  };
   static contextType = NotefulContext;
+
+  handleDeleteFolder(e) {
+    e.preventDefault();
+    const folderId = this.props.id;
+
+    fetch(`${config.API_ENDPOINT}/folders/${folderId}`, {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json"
+      }
+    })
+      .then(res => {
+        if (!res.ok) return res.json().then(e => Promise.reject(e));
+        return res.json();
+      })
+      .then(() => {
+        this.context.deleteFolder(folderId);
+        this.props.onDeleteFolder(folderId);
+      })
+      .catch(error => {
+        console.error({ error });
+      });
+  }
 
   render() {
     const { folders = [], notes = [] } = this.context;
@@ -24,6 +51,13 @@ export default class NoteListNav extends React.Component {
                 </span>
                 {folder.name}
               </NavLink>
+              <button
+                className="folder-delete"
+                type="button"
+                onclick={this.handleDeleteFolder}
+              >
+                REMOVE ^^
+              </button>
             </li>
           ))}
         </ul>
