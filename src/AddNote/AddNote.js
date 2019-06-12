@@ -6,12 +6,18 @@ export default class AddNote extends Component {
   static defaultProps = {
     folders: []
   };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    console.log("note added");
+  };
+
   render() {
     const { folders } = this.props;
     return (
       <section className="AddNote">
         <h2>Create a note</h2>
-        <NotefulForm>
+        <NotefulForm onSubmit={this.handleSubmit}>
           <div className="field">
             <label htmlFor="note-name-input">Name</label>
             <input type="text" id="note-name-input" />

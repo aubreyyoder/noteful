@@ -10,7 +10,7 @@ class NotePageMain extends React.Component {
       params: {}
     }
   };
-  static contectType = NotefulContext;
+  static contextType = NotefulContext;
 
   handleDeleteNote = noteId => {
     this.props.history.push("/");
