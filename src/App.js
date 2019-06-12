@@ -51,6 +51,13 @@ class App extends Component {
     });
   };
 
+  addNote = note => {
+    const newNotes = [...this.state.notes, note];
+    this.setState({
+      notes: newNotes
+    });
+  };
+
   renderNavRoutes() {
     return (
       <>
@@ -82,7 +89,8 @@ class App extends Component {
       notes: this.state.notes,
       folders: this.state.folders,
       deleteNote: this.deleteNote,
-      addFolder: this.addFolder
+      addFolder: this.addFolder,
+      addNote: this.addNote
     };
     return (
       <NotefulContext.Provider value={contextValue}>
