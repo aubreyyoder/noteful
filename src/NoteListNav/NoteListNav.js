@@ -1,6 +1,5 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NotefulContext from "../NotefulContext";
 import { countNotesForFolder } from "../notes-helper";
 import "./NoteListNav.css";
@@ -54,7 +53,7 @@ export default class NoteListNav extends React.Component {
               <button
                 className="folder-delete"
                 type="button"
-                onclick={this.handleDeleteFolder}
+                onClick={this.handleDeleteFolder}
               >
                 REMOVE ^^
               </button>
@@ -67,7 +66,6 @@ export default class NoteListNav extends React.Component {
             type="button"
             className="NoteListNav__add-folder-button"
           >
-            <FontAwesomeIcon icon="plus" />
             <br />
             Add Folder
           </Link>

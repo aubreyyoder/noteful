@@ -30,12 +30,12 @@ export default class AddNote extends Component {
       body: JSON.stringify(newNote)
     })
       .then(res => {
-        if (!res.ok) return res.json().then(e => Promise.reject(e));
-        return res.json();
-      })
-      .then(newNote => {
-        this.context.addNote(newNote);
-        this.props.history.push(`folder/${newNote.folderId}`);
+        if (!res.ok) {
+          throw new Error(`Error occurred!`);
+        } else {
+          this.context.addNote(newNote);
+          this.props.history.push(`folder/${newNote.folderId}`);
+        }
       })
       .catch(error => {
         console.error({ error });
@@ -52,8 +52,8 @@ export default class AddNote extends Component {
             <label htmlFor="note-name-input">Name</label>
             <input type="text" id="note-name-input" name="note-name" />
             <ValidationError
-              hasError={!this.state.noteNameValid}
-              message={this.state.validationMessages.noteName}
+              hasError={!this.context.noteNameValid}
+              message={this.context.validationMessages.noteName}
             />
           </div>
           <div className="field">
@@ -64,7 +64,7 @@ export default class AddNote extends Component {
             <label htmlFor="note-folder-select">Folder</label>
             <select id="note-folder-select" name="note-folder-id">
               <option value={null}>...</option>
-              {folders.map(folder => (
+              {this.context.folders.map(folder => (
                 <option key={folder.id} value={folder.id}>
                   {folder.name}
                 </option>

@@ -1,7 +1,6 @@
 import React from "react";
 import NotefulContext from "../NotefulContext";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Note from "../Note/Note";
 import { getNotesForFolder } from "../notes-helper";
 import "./NoteListMain.css";
@@ -33,7 +32,6 @@ class NoteListMain extends React.Component {
             type="button"
             className="NoteListMain__add-note-button"
           >
-            <FontAwesomeIcon icon="plus" />
             <br />
             Add Note
           </Link>

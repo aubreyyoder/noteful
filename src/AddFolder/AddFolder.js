@@ -11,6 +11,7 @@ class AddFolder extends Component {
       push: () => {}
     }
   };
+
   static contextType = NotefulContext;
 
   handleSubmit = e => {
@@ -26,13 +27,13 @@ class AddFolder extends Component {
       body: JSON.stringify(folder)
     })
       .then(res => {
-        if (!res.ok) return res.json().then(e => Promise.reject(e));
-        return res.json();
-      })
-      .then(res => {
-        console.log(folder);
-        this.context.addFolder(folder);
-        this.props.history.push(`/folder/${folder.id}`);
+        if (!res.ok) {
+          throw new Error(`Error occurred!`);
+        } else {
+          console.log(folder);
+          this.context.addFolder(folder);
+          this.props.history.push(`/folder/${folder.id}`);
+        }
       })
       .catch(error => {
         console.error({ error });
