@@ -13,7 +13,7 @@ export default class NoteListNav extends React.Component {
 
   handleDeleteFolder(e) {
     e.preventDefault();
-    const folderId = this.props.id;
+    const folderId = e.currentTarget.value;
 
     fetch(`${config.API_ENDPOINT}/folders/${folderId}`, {
       method: "DELETE",
@@ -35,7 +35,7 @@ export default class NoteListNav extends React.Component {
   }
 
   render() {
-    const { folders = [], notes = [] } = this.context;
+    const { folders, notes } = this.context;
     return (
       <div className="NoteListNav">
         <ul className="NoteListNav__list">
@@ -51,6 +51,7 @@ export default class NoteListNav extends React.Component {
                 {folder.name}
               </NavLink>
               <button
+                value={folder.id}
                 className="folder-delete"
                 type="button"
                 onClick={this.handleDeleteFolder}
