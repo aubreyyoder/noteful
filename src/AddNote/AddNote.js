@@ -3,6 +3,7 @@ import NotefulForm from "../NotefulForm/NotefulForm";
 import "./AddNote.css";
 import NotefulContext from "../NotefulContext";
 import config from "../config";
+import PropTypes from "prop-types";
 import ValidationError from "../ErrorBoundaries/ValidationError";
 
 export default class AddNote extends Component {
@@ -42,6 +43,38 @@ export default class AddNote extends Component {
       });
   };
 
+  validateNoteName(fieldValue) {
+    const fieldErrors = { ...this.state.validationMessages };
+    let hasError = false;
+
+    fieldValue = fieldValue.trim();
+    if (fieldValue.length === 0) {
+      fieldErrors.noteName = "Name is required";
+      hasError = true;
+    } else {
+      if (fieldValue.length > 20) {
+        fieldErrors.noteName = "Name must be less than 20 characters";
+        hasError = true;
+      } else {
+        fieldErrors.noteName = "";
+        hasError = false;
+      }
+    }
+    this.setState(
+      {
+        validationMessages: fieldErrors,
+        noteNameValid: !hasError
+      },
+      this.formValid
+    );
+  }
+
+  updateNoteName(noteName) {
+    this.setState({ noteName }, () => {
+      this.validateNoteName(noteName);
+    });
+  }
+
   render() {
     return (
       <section className="AddNote">
@@ -78,3 +111,7 @@ export default class AddNote extends Component {
     );
   }
 }
+
+AddNote.propTypes = {
+  value: PropTypes.string.isRequired
+};

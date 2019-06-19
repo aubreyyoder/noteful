@@ -3,6 +3,7 @@ import NotefulForm from "../NotefulForm/NotefulForm";
 import NotefulContext from "../NotefulContext";
 import config from "../config";
 import "./AddFolder.css";
+import PropTypes from "prop-types";
 import ValidationError from "../ErrorBoundaries/ValidationError";
 
 class AddFolder extends Component {
@@ -66,12 +67,6 @@ class AddFolder extends Component {
     );
   }
 
-  formValid() {
-    this.setState({
-      formValid: this.state.folderNameValid
-    });
-  }
-
   updateFolderName(folderName) {
     this.setState({ folderName }, () => {
       this.validateFolderName(folderName);
@@ -101,3 +96,7 @@ class AddFolder extends Component {
 }
 
 export default AddFolder;
+
+AddFolder.propTypes = {
+  value: PropTypes.string.isRequired
+};

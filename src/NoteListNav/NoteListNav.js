@@ -6,6 +6,9 @@ import "./NoteListNav.css";
 import config from "../config";
 
 export default class NoteListNav extends React.Component {
+  constructor(props) {
+    super(props);
+  }
   static defaultProps = {
     onDeleteFolder: () => {}
   };

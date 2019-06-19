@@ -8,6 +8,7 @@ import AddFolder from "./AddFolder/AddFolder";
 import AddNote from "./AddNote/AddNote";
 import config from "./config";
 import "./App.css";
+import NotefulError from "./NotefulError";
 import NotefulContext from "./NotefulContext";
 
 class App extends Component {
@@ -83,15 +84,23 @@ class App extends Component {
     });
   };
 
+  formValid = () => {
+    this.setState({
+      formValid: this.state.noteNameValid && this.state.folderNameValid
+    });
+  };
+
   renderNavRoutes() {
     return (
       <>
-        {["/", "/folder/:folderId"].map(path => (
-          <Route exact key={path} path={path} component={NoteListNav} />
-        ))}
-        <Route path="/note/:noteId" component={NotePageNav} />
-        <Route path="/add-folder" component={NotePageNav} />
-        <Route path="/add-note" component={NotePageNav} />
+        <NotefulError>
+          {["/", "/folder/:folderId"].map(path => (
+            <Route exact key={path} path={path} component={NoteListNav} />
+          ))}
+          <Route path="/note/:noteId" component={NotePageNav} />
+          <Route path="/add-folder" component={NotePageNav} />
+          <Route path="/add-note" component={NotePageNav} />
+        </NotefulError>
       </>
     );
   }
@@ -99,12 +108,14 @@ class App extends Component {
   renderMainRoutes() {
     return (
       <>
-        {["/", "/folder/:folderId"].map(path => (
-          <Route exact key={path} path={path} component={NoteListMain} />
-        ))}
-        <Route path="/note/:noteId" component={NotePageMain} />
-        <Route path="/add-folder" component={AddFolder} />
-        <Route path="/add-note" component={AddNote} />
+        <NotefulError>
+          {["/", "/folder/:folderId"].map(path => (
+            <Route exact key={path} path={path} component={NoteListMain} />
+          ))}
+          <Route path="/note/:noteId" component={NotePageMain} />
+          <Route path="/add-folder" component={AddFolder} />
+          <Route path="/add-note" component={AddNote} />
+        </NotefulError>
       </>
     );
   }
@@ -136,13 +147,15 @@ class App extends Component {
     return (
       <NotefulContext.Provider value={contextValue}>
         <div className="App">
-          <nav className="App__nav">{this.renderNavRoutes()}</nav>
-          <header className="App__header">
-            <h1>
-              <Link to="/">Noteful</Link>{" "}
-            </h1>
-          </header>
-          <main className="App__main">{this.renderMainRoutes()}</main>
+          <NotefulError>
+            <nav className="App__nav">{this.renderNavRoutes()}</nav>
+            <header className="App__header">
+              <h1>
+                <Link to="/">Noteful</Link>{" "}
+              </h1>
+            </header>
+            <main className="App__main">{this.renderMainRoutes()}</main>
+          </NotefulError>
         </div>
       </NotefulContext.Provider>
     );
